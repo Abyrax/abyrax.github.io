@@ -1,0 +1,5 @@
+# BondLog marketing site
+User-agent: *
+Allow: /
+
+Sitemap: https://abyrax.com/Bondlog/sitemap.xml

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#18181c">
+<script>
+  (function () {
+    try {
+      if (localStorage.getItem('bondlog-theme') === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', '#f5f5f5');
+      }
+    } catch (e) {}
+  })();
+</script>
+<title>BondLog — A private journal for the people you care about</title>
+<meta name="description" content="BondLog helps you keep in touch with the people who matter. Log a call, message, or meet-up in a swipe, see who’s due for a catch-up, and set one-time or keep-in-touch reminders. Relationship data stays on your iPhone.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BondLog — Your people. Still close.">
+<meta property="og:description" content="A private, on-device journal for the relationships you want to keep warm. Manual logging, factual insights, no account.">
+<meta property="og:image" content="assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="BondLog — Your people. Still close.">
+<link rel="canonical" href="https://abyrax.com/Bondlog/">
+<meta property="og:url" content="https://abyrax.com/Bondlog/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BondLog — Your people. Still close.">
+<meta name="twitter:description" content="A private, on-device journal for the relationships you want to keep warm.">
+<meta name="twitter:image" content="assets/og-image.png">
+<meta name="color-scheme" content="dark light">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "BondLog",
+  "alternateName": "Last Contact",
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "iOS 27 or later",
+  "description": "A private, on-device relationship journal. Log calls, messages, meet-ups, and shared videos manually, see who is due for a catch-up, and set one-time or keep-in-touch reminders. No account, no ads, no cloud AI for relationship data.",
+  "isAccessibleForFree": true,
+  "featureList": [
+    "Manual swipe and slide interaction logging",
+    "Reach out list with due reminders and upcoming dates",
+    "One-time and keep-in-touch local reminders with quick snooze presets",
+    "Reminder notification status, test notifications, and name-hiding privacy",
+    "Birthdays, special dates, memory cues, and multiple dated notes",
+    "Basic and Plus on-device insights with a per-person photo filter",
+    "General stats with interaction, people, initiation, and channel breakdowns",
+    "Per-person contact rhythm, recent history, and Plus gap chart",
+    "Configurable weekly check-in day and time",
+    "Language shortcut, default channel, and appearance preferences",
+    "Backup export history and in-app troubleshooting",
+    "List and gallery people layouts with drag reordering",
+    "Home Screen widget logging with Undo",
+    "Photo-inclusive backup and restore",
+    "Manage subscription and restore purchases",
+    "Categories and archiving"
+  ]
+}
+</script>
+<link rel="icon" href="assets/BondLogIcon-32.png" sizes="32x32">
+<link rel="icon" href="assets/BondLogIcon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="assets/BondLogIcon-192.png">
+<link rel="stylesheet" href="styles.css?v=32">
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="ico-inperson" viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="9.4" cy="7.2" r="3.5"/>
+    <path d="M2.6 18.6a6.8 6.8 0 0 1 13.6 0c0 .5-.4.9-.9.9H3.5a.9.9 0 0 1-.9-.9z"/>
+    <circle cx="17" cy="8.4" r="2.8"/>
+    <path d="M16.4 12.7c3.1.1 5.5 2.2 6 5.4a.8.8 0 0 1-.8.9h-3.2a7.9 7.9 0 0 0-2-6.3z"/>
+  </symbol>
+  <symbol id="ico-call" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M7.4 2.6c.7-.5 1.7-.4 2.3.2l2.1 2.1c.6.6.7 1.6.2 2.3l-.8 1.1c-.2.3-.2.6 0 .9a11.4 11.4 0 0 0 4.1 4.1c.3.2.6.2.9 0l1.1-.8c.7-.5 1.7-.4 2.3.2l2.1 2.1c.6.6.7 1.6.2 2.3l-1.2 1.7c-.7.9-1.8 1.4-2.9 1.2-5.9-1.2-10.6-5.9-11.8-11.8-.2-1.1.3-2.2 1.2-2.9z"/>
+  </symbol>
+  <symbol id="ico-message" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 3.2c5.2 0 9.4 3.5 9.4 7.9s-4.2 7.9-9.4 7.9c-.9 0-1.8-.1-2.6-.3l-3.6 1.9c-.5.3-1.2-.1-1.1-.7l.4-2.7c-1.3-1.4-2-3.2-2-5.1 0-4.4 4.2-7.9 9.4-7.9z"/>
+  </symbol>
+  <symbol id="ico-video" viewBox="0 0 24 24" fill="currentColor">
+    <rect x="2.8" y="5.2" width="13.2" height="13.6" rx="3.2"/>
+    <path d="M17.4 9.6l3-1.9c.6-.4 1.4.1 1.4.8v7c0 .7-.8 1.2-1.4.8l-3-1.9z"/>
+  </symbol>
+  <symbol id="ico-paperplane" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M21.2 3.4 2.9 10.2c-.9.3-.9 1.6 0 1.9l6.9 2.4 2.4 6.9c.3.9 1.6.9 1.9 0l6.8-18.3c.2-.7-.5-1.4-1.2-1.1zM10.9 13.1l6.6-6.2-5.1 7.6-.4 4.3-1.1-5.7z"/>
+  </symbol>
+  <symbol id="ico-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="3.1"/>
+    <path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l1.8-1.4-1.9-3.2-2.1.8a7.6 7.6 0 0 0-2.6-1.5L14.2 2.9h-3.7l-.4 2.3a7.6 7.6 0 0 0-2.6 1.5l-2.1-.8-1.9 3.2 1.8 1.4a7.6 7.6 0 0 0 0 3l-1.8 1.4 1.9 3.2 2.1-.8a7.6 7.6 0 0 0 2.6 1.5l.4 2.3h3.7l.4-2.3a7.6 7.6 0 0 0 2.6-1.5l2.1.8 1.9-3.2z"/>
+  </symbol>
+  <symbol id="ico-sparkles" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M9.9 3.2c.8 4 2.5 5.7 6.5 6.5-4 .8-5.7 2.5-6.5 6.5-.8-4-2.5-5.7-6.5-6.5 4-.8 5.7-2.5 6.5-6.5z"/>
+    <path d="M17.8 12.9c.4 2.2 1.4 3.2 3.6 3.6-2.2.4-3.2 1.4-3.6 3.6-.4-2.2-1.4-3.2-3.6-3.6 2.2-.4 3.2-1.4 3.6-3.6z"/>
+    <path d="M17.3 3c.3 1.6.9 2.2 2.5 2.5-1.6.3-2.2.9-2.5 2.5-.3-1.6-.9-2.2-2.5-2.5 1.6-.3 2.2-.9 2.5-2.5z"/>
+  </symbol>
+  <symbol id="ico-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 20h4.2L19.4 8.8a2.1 2.1 0 0 0 0-3l-1.2-1.2a2.1 2.1 0 0 0-3 0L4 15.8z"/>
+    <path d="m13.6 6.2 4.2 4.2"/>
+  </symbol>
+  <symbol id="ico-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6.5 16.5h11l-1.3-2.1a4 4 0 0 1-.6-2.1v-2.2a3.6 3.6 0 1 0-7.2 0v2.2c0 .75-.2 1.5-.6 2.1z"/>
+    <path d="M10.3 19.2a1.9 1.9 0 0 0 3.4 0"/>
+  </symbol>
+  <symbol id="ico-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3.5" y="5" width="17" height="15" rx="2.6"/>
+    <path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/>
+    <path d="M7.5 13h3v3h-3z" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="ico-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5.5 4.5h9.2L19 8.8v11.2a1.5 1.5 0 0 1-1.5 1.5h-12A1.5 1.5 0 0 1 4 20V6a1.5 1.5 0 0 1 1.5-1.5z"/>
+    <path d="M8 12h8M8 15.5h6"/>
+  </symbol>
+  <symbol id="ico-iphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+    <rect x="7" y="2.5" width="10" height="19" rx="2.6"/>
+    <path d="M11 5.3h2"/>
+    <path d="M10.4 18.5h3.2"/>
+  </symbol>
+  <symbol id="ico-noaccount" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+    <circle cx="12" cy="8.4" r="3.4"/>
+    <path d="M5.5 20c.9-3.4 3.4-5.2 6.5-5.2s5.6 1.8 6.5 5.2"/>
+    <path d="M3.2 3.2 20.8 20.8"/>
+  </symbol>
+  <symbol id="ico-export" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3.5v11"/>
+    <path d="m8.4 10.8 3.6 3.7 3.6-3.7"/>
+    <path d="M4.5 17.5v1.2A2.3 2.3 0 0 0 6.8 21h10.4a2.3 2.3 0 0 0 2.3-2.3v-1.2"/>
+  </symbol>
+  <symbol id="ico-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 6.5h15"/>
+    <path d="M9.5 6.5V4.8c0-.7.6-1.3 1.3-1.3h2.4c.7 0 1.3.6 1.3 1.3v1.7"/>
+    <path d="M6.5 6.5 7.4 19a2 2 0 0 0 2 1.9h5.2a2 2 0 0 0 2-1.9l.9-12.5"/>
+    <path d="M10.3 10.2v7M13.7 10.2v7"/>
+  </symbol>
+</svg>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="ambient" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+<nav class="nav" aria-label="BondLog">
+  <div class="wrap nav-inner">
+    <a class="nav-brand" href="#top">
+      <span class="mark mark-dark"><img class="mark-icon" src="assets/BondLogIcon-192.png" alt="" width="192" height="192" decoding="async"><img class="mark-rope" src="assets/bondlog-mark-192.png" alt="" width="192" height="192" decoding="async"></span>
+      BondLog
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#people">Your people</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#privacy">Privacy</a></li>
+      <li><a href="#how">How it works</a></li>
+    </ul>
+    <details class="nav-menu">
+      <summary aria-label="Menu"><span class="nav-menu-icon" aria-hidden="true"></span><span class="nav-menu-label">Menu</span></summary>
+      <ul role="list">
+        <li><a href="#people">Your people</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="#how">How it works</a></li>
+      </ul>
+    </details>
+    <button type="button" class="theme-toggle" data-theme-toggle role="switch" aria-checked="true" aria-label="Dark mode" title="Switch to light appearance">
+      <svg class="ico ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a8.6 8.6 0 1 0 10.8 10.8z"/></svg>
+      <svg class="ico ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M4.3 4.3l1.6 1.6M18.1 18.1l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.3 19.7l1.6-1.6M18.1 5.9l1.6-1.6"/></svg>
+      <span class="theme-label">Dark</span>
+    </button>
+    <a class="btn btn-small" href="#download">Get BondLog</a>
+  </div>
+</nav>
+
+<main id="main" tabindex="-1">
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="top">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="hero-chip"><span class="mark mark-dark"><img class="mark-icon" src="assets/BondLogIcon-192.png" alt="" width="192" height="192" decoding="async"><img class="mark-rope" src="assets/bondlog-mark-192.png" alt="" width="192" height="192" decoding="async"></span>BondLog <em>· private relationship journal</em></p>
+        <h1 class="hero-headline"><span>Your people.</span> <span>Still close<i class="hero-dot" aria-hidden="true">.</i></span></h1>
+        <p class="lede">BondLog is a quiet journal for the relationships you want to keep warm. Log a call, a message, or a meet-up in a swipe, see who’s due for a catch-up, and set reminders that fit your rhythm. <strong>Your relationship data stays on your iPhone.</strong></p>
+        <div class="hero-actions">
+          <a class="btn btn-big is-soon" href="#download" data-store-cta title="BondLog isn’t on the App Store yet — see availability">Coming soon to the App Store</a>
+          <a href="#demo">See how it works ›</a>
+        </div>
+        <div class="facepile" aria-hidden="true"></div>
+      </div>
+
+      <div class="hero-demo">
+        <div class="stage" id="demo">
+          <div class="stage-inner">
+            <div class="ring" id="ring" aria-hidden="true"></div>
+            <div class="phone" id="phone" data-screen="people" role="group" aria-label="Interactive BondLog demo">
+          <div class="screen">
+            <div class="screen-rope" aria-hidden="true"></div>
+            <div class="island"></div>
+            <div class="status">
+              <span>9:41</span>
+              <svg viewBox="0 0 66 12" fill="currentColor" aria-hidden="true"><rect x="0" y="7" width="3" height="5" rx=".8"/><rect x="5" y="5" width="3" height="7" rx=".8"/><rect x="10" y="2.5" width="3" height="9.5" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/><path d="M31 2.3c2.3 0 4.4.9 6 2.4l1-1.1C36.1 1.8 33.7.8 31 .8s-5.1 1-7 2.8l1 1.1c1.6-1.5 3.7-2.4 6-2.4zm0 3.5c1.4 0 2.6.5 3.6 1.4l1-1.1c-1.2-1.1-2.8-1.8-4.6-1.8s-3.4.7-4.6 1.8l1 1.1c1-.9 2.2-1.4 3.6-1.4zm0 3.4c-.7 0-1.3.3-1.7.7L31 11.8l1.7-1.9c-.4-.4-1-.7-1.7-.7z"/><rect x="43.5" y=".5" width="19" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".4"/><rect x="45" y="2" width="16" height="8" rx="2"/><rect x="63.5" y="4" width="1.5" height="4" rx=".7" opacity=".45"/></svg>
+            </div>
+
+            <div class="phone-body">
+            <div class="phone-brand"><img src="assets/bondlog-mark-192.png" alt="" width="22" height="22" decoding="async">BondLog</div>
+            <div class="people-view" data-view="people">
+            <div class="people-head">
+              <p class="app-title">People</p>
+              <span class="layout-picker" aria-hidden="true"><span>Gallery</span><span class="on">List</span></span>
+            </div>
+            <div class="chips" role="group" aria-label="Filter demo people">
+              <button type="button" class="chip selected" aria-pressed="true" data-filter="All">All</button>
+              <button type="button" class="chip" data-filter="Family">Family</button>
+              <button type="button" class="chip" data-filter="Friends">Friends</button>
+              <button type="button" class="chip" data-filter="Work">Work</button>
+              <span class="chip chip-add">＋</span>
+            </div>
+
+            <ul class="plist list-view" aria-label="Illustrative people list">
+              <li class="person is-demo" data-category="Family">
+                <span class="avatar" style="--av-bg:linear-gradient(140deg,rgba(114,59,250,.22),rgba(114,59,250,.42))">👩🏽‍⚕️</span>
+                <span class="p-copy"><b class="pname">Maya</b><small class="plast">Called today</small></span>
+                <span class="p-chev" aria-hidden="true">›</span>
+              </li>
+              <li class="quicklog-row">
+                <div class="quicklog demo-panel" role="group" aria-label="Swipe logging for Maya">
+                  <div class="swipebar">
+                    <button type="button" class="hint you" aria-label="You reached out">YOU <span class="arrow">→</span></button>
+                    <button type="button" class="hint them" aria-label="Them: Maya reached out"><span class="arrow">←</span> THEM</button>
+                    <span class="pavatar" style="--av-bg:linear-gradient(140deg,rgba(114,59,250,.3),rgba(114,59,250,.55));--av-ink:#f5f5f5">👩🏽‍⚕️</span>
+                    <div class="selectpane">
+                      <span class="select-q">How did you reach out to Maya?</span>
+                      <span class="typegrid">
+                        <button type="button" class="type" data-type="In Person"><svg class="ico" focusable="false"><use href="#ico-inperson"></use></svg>In Person</button>
+                        <button type="button" class="type" data-type="Call"><svg class="ico" focusable="false"><use href="#ico-call"></use></svg>Call</button>
+                        <button type="button" class="type active" data-type="Message"><svg class="ico" focusable="false"><use href="#ico-message"></use></svg>Message</button>
+                        <button type="button" class="type" data-type="Video"><svg class="ico" focusable="false"><use href="#ico-video"></use></svg>Video</button>
+                      </span>
+                      <button type="button" class="cancel-selection" data-cancel>Cancel</button>
+                    </div>
+                    <div class="confirmpane">
+                      <span class="check" aria-hidden="true">✓</span>
+                      <span class="confirm-text">You sent Maya a message</span>
+                      <button type="button" class="undo">Undo</button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="person" data-category="Friends">
+                <span class="avatar" style="--av-bg:linear-gradient(140deg,rgba(114,59,250,.22),rgba(114,59,250,.42))">👮🏽</span>
+                <span class="p-copy"><b class="pname">Priya</b><small class="plast">11 days ago</small></span>
+                <span class="p-chev" aria-hidden="true">›</span>
+              </li>
+              <li class="person" data-category="Work">
+                <span class="avatar" style="--av-bg:linear-gradient(140deg,rgba(114,59,250,.22),rgba(114,59,250,.42))">🧑‍🎨</span>
+                <span class="p-copy"><b class="pname">Jonas</b><small class="plast">Yesterday</small></span>
+                <span class="p-chev" aria-hidden="true">›</span>
+              </li>
+              <li class="person person-add" data-category="All">
+                <span class="avatar">＋</span>
+                <span class="p-copy"><b class="pname">Add Person</b><small class="plast">Your circle, your pace</small></span>
+              </li>
+            </ul>
+            </div>
+
+            <div class="insights-view" data-view="insights" hidden>
+              <p class="app-title">Insights</p>
+              <div class="phone-seg" role="group" aria-label="Insights view">
+                <button type="button" class="on" data-insight-view="feed" aria-pressed="true">Insights</button>
+                <button type="button" data-insight-view="stats" aria-pressed="false">General stats</button>
+              </div>
+              <div class="phone-feed" data-insight-panel="feed">
+                <div class="phone-insight">
+                  <span class="insight-new">New</span>
+                  <b>A run of you reaching out</b>
+                  <span>Your last 3 interactions with Maya were all started by you.</span>
+                  <small>Maya</small>
+                </div>
+                <p class="phone-insight-note">Calculated on this iPhone from your logged interactions.</p>
+              </div>
+              <div class="phone-stats" data-insight-panel="stats" hidden>
+                <div class="phone-stats-range" role="group" aria-label="Stats range">
+                  <button type="button" class="on" data-stats-range="30" aria-pressed="true">30 days</button>
+                  <button type="button" data-stats-range="all" aria-pressed="false">All time</button>
+                </div>
+                <div class="phone-stats-totals">
+                  <span><b data-count-30="18" data-count-all="64">18</b><small>Interactions</small></span>
+                  <span><b data-count-30="6" data-count-all="9">6</b><small>People contacted</small></span>
+                </div>
+                <div class="phone-stats-card">
+                  <b>Who reached out</b>
+                  <span class="phone-split"><i class="you" data-bar-30="61" data-bar-all="58" style="width:61%"></i><i class="them"></i></span>
+                  <span class="phone-legend">You <b data-count-30="11" data-count-all="37">11</b> · Them <b data-count-30="7" data-count-all="27">7</b></span>
+                </div>
+                <div class="phone-stats-card">
+                  <b>Communication</b>
+                  <span class="phone-bar"><span>Message</span><span class="track"><i data-bar-30="50" data-bar-all="48" style="width:50%"></i></span><small data-count-30="9" data-count-all="31">9</small></span>
+                  <span class="phone-bar"><span>Call</span><span class="track"><i data-bar-30="28" data-bar-all="25" style="width:28%"></i></span><small data-count-30="5" data-count-all="16">5</small></span>
+                  <span class="phone-bar"><span>In Person</span><span class="track"><i data-bar-30="17" data-bar-all="17" style="width:17%"></i></span><small data-count-30="3" data-count-all="11">3</small></span>
+                  <span class="phone-bar"><span>Video</span><span class="track"><i data-bar-30="5" data-bar-all="9" style="width:5%"></i></span><small data-count-30="1" data-count-all="6">1</small></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="reachout-view" data-view="reachout" hidden>
+              <p class="app-title">Reach out</p>
+              <p class="ro-section ro-section-first">Due now</p>
+              <div class="ro-card">
+                <div class="ro-head">
+                  <span class="ro-avatar" style="--av-bg:linear-gradient(140deg,rgba(185,245,0,.3),rgba(185,245,0,.55))">👩🏼</span>
+                  <span class="ro-info"><b>Priya</b><small>Keep in touch · 11 days</small></span>
+                </div>
+                <div class="ro-actions"><span class="ro-btn primary">Log</span><span class="ro-btn">Remind Me Later</span><span class="ro-open">Open Person</span></div>
+                <div class="ro-chips"><span>15 min</span><span>1 hour</span><span>Tomorrow</span><span>Next week</span></div>
+              </div>
+              <p class="ro-section">Upcoming</p>
+              <div class="ro-up"><span class="ro-up-name">Jonas</span><small>Reminder · tomorrow</small></div>
+              <div class="ro-up"><span class="ro-up-name">Maya</span><small>Birthday · in 5 days</small></div>
+            </div>
+
+            <div class="settings-view" data-view="settings" hidden>
+              <p class="app-title">Settings</p>
+              <p class="set-label">Reminders</p>
+              <div class="set-group">
+                <div class="set-row"><span>Weekly check-in</span><span class="set-toggle"><i></i></span></div>
+                <div class="set-row"><span>Reminder settings</span><span class="set-chev">›</span></div>
+              </div>
+              <p class="set-label">Preferences</p>
+              <div class="set-group">
+                <div class="set-row"><span>Appearance</span><span class="set-seg"><i class="on">System</i><i>Light</i><i>Dark</i></span></div>
+                <div class="set-row"><span>Language</span><span class="set-chev">›</span></div>
+                <div class="set-row"><span>Default channel</span><span class="set-value">Last used</span></div>
+              </div>
+              <p class="set-label">Privacy</p>
+              <div class="set-group">
+                <div class="set-row"><span>Hide names in reminders</span><span class="set-toggle"><i></i></span></div>
+              </div>
+              <p class="set-label">Support</p>
+              <div class="set-group">
+                <div class="set-row"><span>Troubleshooting</span><span class="set-chev">›</span></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabbar" role="group" aria-label="Demo screens">
+          <button type="button" class="tab" data-tab="insights">
+            <svg class="ico" focusable="false"><use href="#ico-sparkles"></use></svg>
+            <span>Insights</span></button>
+          <button type="button" class="tab" data-tab="reachout">
+            <span class="tab-badge">2</span>
+            <svg class="ico" focusable="false"><use href="#ico-paperplane"></use></svg>
+            <span>Reach out</span></button>
+          <button type="button" class="tab selected" aria-pressed="true" data-tab="people">
+            <svg class="ico" focusable="false"><use href="#ico-inperson"></use></svg>
+            <span>People</span></button>
+          <button type="button" class="tab" data-tab="settings">
+            <svg class="ico" focusable="false"><use href="#ico-gear"></use></svg>
+            <span>Settings</span></button>
+        </div>
+      </div>
+      <p class="sr-only" id="demo-status" role="status" aria-live="polite" aria-atomic="true"></p>
+    </div>
+        <p class="stage-caption">Try You or Them, choose a channel, then Undo. Filters and screen tabs work too. This simplified demo uses fictional people; other controls are illustrative.<sup><a href="#fn3" id="fnref3">3</a></sup>
+          <button class="replay" id="replay" hidden>Replay demo</button>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== At a glance ===== -->
+  <section class="section glance" id="glance" aria-labelledby="glance-title">
+    <div class="wrap reveal">
+      <div class="glance-panel">
+        <div class="glance-copy">
+          <p class="glance-eyebrow">The short version</p>
+          <h2 class="glance-title" id="glance-title">A quiet system for staying close.</h2>
+          <p>BondLog doesn’t read your messages or guess how you feel. You log the moments that matter, and it keeps them in view — so the next catch-up starts with context.</p>
+        </div>
+        <dl class="glance-facts">
+          <div class="glance-fact">
+            <dt>Made for</dt>
+            <dd>iPhone<small>iOS 27 or later</small></dd>
+          </div>
+          <div class="glance-fact">
+            <dt>Speaks</dt>
+            <dd>28 languages<small>Dynamic Type and VoiceOver</small></dd>
+          </div>
+          <div class="glance-fact">
+            <dt>Logs</dt>
+            <dd>Four channels<small>In person, call, message, video</small></dd>
+          </div>
+          <div class="glance-fact">
+            <dt>Privacy</dt>
+            <dd>On your device<small>No account, no sync, no ads</small></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== People / recency ===== -->
+  <section class="section section-tint" id="people">
+    <div class="wrap reveal">
+      <div class="people-grid">
+        <div class="people-copy">
+          <h2 class="headline">Your people, a little closer.</h2>
+          <p class="lede">Keep people in a List, arrange them in your own order, and tap a row to log in a swipe. <strong>Every interaction starts with you.</strong></p>
+          <ul class="people-points" role="list">
+            <li><b>One swipe to log</b><span>Right when you reached out, left when they did.</span></li>
+            <li><b>A profile one tap away</b><span>Reminders, dates, notes and summary behind the chevron.</span></li>
+            <li><b>A face that feels like them</b><span>Choose a photo or an emoji avatar.</span></li>
+          </ul>
+        </div>
+        <figure class="people-shot">
+          <picture>
+            <source srcset="assets/app/people-light-720.avif?v=3" type="image/avif">
+            <img src="assets/app/people-light-720.jpg?v=3" alt="BondLog People in List view in Light appearance: Maya selected with her attached swipe panel, Priya below her, emoji avatars, and a profile chevron on each person row." width="720" height="1565" loading="lazy" decoding="async">
+          </picture>
+          <figcaption><b>One tap, then a swipe.</b><span>Tap a row to open its swipe controls; the chevron opens the full profile.</span></figcaption>
+        </figure>
+      </div>
+      <p class="fine people-fine">Actual iOS app capture, using fictional people. Choose System, Light or Dark in Settings. BondLog never reads your messages or contacts.<sup><a href="#fn1" id="fnref1">1</a></sup></p>
+    </div>
+  </section>
+
+  <!-- ===== Features ===== -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <h2 class="headline">Built for a two-second habit.</h2>
+        <p class="lede">Ten small pieces that add up to one thing: staying in touch on purpose.</p>
+      </header>
+
+      <div class="cards">
+        <article class="card reveal">
+          <div class="card-copy">
+            <h3>Log it in a swipe</h3>
+            <p>Tap a person to open the swipe controls on their row. Slide right when you reached out or left when they did, then tap In Person, Call, Message, or Video. Tap the row again to close it. Logged it late? You can still save it with the date it actually happened.</p>
+          </div>
+          <div class="card-visual" aria-hidden="true">
+            <div class="v-swipe-stack">
+              <div class="v-swipe">
+                <span class="hint you">YOU <span class="arrow">→</span></span>
+                <span class="hint them"><span class="arrow">←</span> THEM</span>
+                <span class="pavatar" style="--av-bg:linear-gradient(140deg,rgba(114,59,250,.3),rgba(114,59,250,.55));--av-ink:#f5f5f5">👩🏽</span>
+              </div>
+              <p class="v-swipe-q">How did you reach out to Maya?</p>
+              <div class="v-types v-swipe-types">
+                <span class="vtype"><svg class="ico" focusable="false"><use href="#ico-inperson"></use></svg>In Person</span>
+                <span class="vtype"><svg class="ico" focusable="false"><use href="#ico-call"></use></svg>Call</span>
+                <span class="vtype sel"><svg class="ico" focusable="false"><use href="#ico-message"></use></svg>Message</span>
+                <span class="vtype"><svg class="ico" focusable="false"><use href="#ico-video"></use></svg>Video</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-copy">
+            <h3>Log from your Home Screen</h3>
+            <p>Add a <strong>small, medium, or large</strong> BondLog widget and log a call, message, or meet-up without opening the app — with Undo. <strong>You don’t need to open the app every time.</strong> The medium and large widgets page through up to twelve people, ordered by your list or by most overdue; the small widget shows a read-only grid. Lock Screen accessories show a person and their recency.</p>
+          </div>
+          <div class="card-visual" aria-hidden="true">
+            <div class="v-widget">
+              <div class="v-widget-head">
+                <span class="mark mark-dark"><img src="assets/bondlog-mark-192.png" alt="" width="192" height="192" decoding="async"></span>
+                <b>BondLog</b>
+                <span class="v-widget-next">›</span>
+              </div>
+              <div class="v-widget-grid">
+                <span class="v-widget-cell"><span class="v-widget-ava" style="--av-bg:linear-gradient(140deg,rgba(114,59,250,.3),rgba(114,59,250,.55))">👩🏽</span><b>Maya</b><small>Today</small></span>
+                <span class="v-widget-cell"><span class="v-widget-ava" style="--av-bg:linear-gradient(140deg,rgba(185,245,0,.3),rgba(185,245,0,.55))">👩🏼</span><b>Priya</b><small>11 days</small></span>
+                <span class="v-widget-cell"><span class="v-widget-ava" style="--av-bg:linear-gradient(140deg,rgba(245,245,245,.32),rgba(245,245,245,.16))">👨🏻</span><b>Jonas</b><small>Yesterday</small></span>
+                <span class="v-widget-cell"><span class="v-widget-ava" style="--av-bg:linear-gradient(140deg,rgba(114,59,250,.16),rgba(114,59,250,.32))">👨🏾</span><b>Tom</b><small>3 days</small></span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-copy">
+            <h3>Reach out when it’s due</h3>
+            <p>The <em>Reach out</em> tab groups everyone with a reminder due or a date coming up into glass cards, so you can Log, snooze from 15 minutes to next week, mark a reminder done, or open the person. Plus adds a Weekly review of who to reach out to, and why.</p>
+          </div>
+          <div class="card-visual" aria-hidden="true">
+            <div class="v-reachout">
+              <div class="ro-card">
+                <div class="ro-head">
+                  <span class="ro-avatar" style="--av-bg:linear-gradient(140deg,rgba(185,245,0,.3),rgba(185,245,0,.55))">👩🏼</span>
+                  <span class="ro-info"><b>Priya</b><small>Keep in touch · 11 days</small></span>
+                </div>
+                <div class="ro-actions"><span class="ro-btn primary">Log</span><span class="ro-btn">Remind Me Later</span></div>
+                <div class="ro-chips"><span>15 min</span><span>1 hour</span><span>Tomorrow</span><span>Next week</span></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-copy">
+            <h3>Reminders that fit your rhythm</h3>
+            <p>Set a one-time reminder with hour and minute wheels or a custom date, and a separate keep-in-touch schedule — weekly to custom. Snooze anything due from 15 minutes to next week; smart and minute/hour frequencies are part of Plus. Reminder settings can test notifications, and Hide names in reminders keeps alerts generic.</p>
+          </div>
+          <div class="card-visual" aria-hidden="true">
+            <div class="v-reminders">
+              <div class="v-rem">
+                <span class="v-rem-ico"><svg class="ico" focusable="false"><use href="#ico-bell"></use></svg></span>
+                <span class="v-rem-copy"><b>One-time reminder</b><small>Check in · tonight, 8:00 PM</small></span>
+              </div>
+              <div class="v-rem">
+                <span class="v-rem-ico"><svg class="ico" focusable="false"><use href="#ico-paperplane"></use></svg></span>
+                <span class="v-rem-copy"><b>Keep in touch</b><small>Every two weeks</small></span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-copy">
+            <h3>Dates, notes, and memory cues</h3>
+            <p>Add a birthday, labeled special dates, and a short memory cue. Each profile also keeps a list of dated notes — add, edit, or delete them from the person’s page, and saved notes appear on their People card.</p>
+          </div>
+          <div class="card-visual" aria-hidden="true">
+            <div class="v-dates">
+              <div class="v-date-row"><svg class="ico" focusable="false"><use href="#ico-calendar"></use></svg><span>Birthday</span><b>Mar 14</b></div>
+              <div class="v-date-row"><svg class="ico" focusable="false"><use href="#ico-calendar"></use></svg><span>Anniversary</span><b>Jun 2</b></div>
+              <div class="v-note"><svg class="ico" focusable="false"><use href="#ico-note"></use></svg><span>Ask about the marathon</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-copy">
+            <h3>See where you stand</h3>
+            <p>Open a person for their latest interaction and next reminder, then a Contact rhythm you can tap by week or month. Who reached out breaks the same period down by initiator, Communication by channel, and Recent History sits right below with channel and period filters. Free covers 7 and 30 days; Plus adds 90-day, one-year, and all-time ranges, a monthly heatmap, a typical-gap chart, and period comparisons.</p>
+          </div>
+          <div class="card-visual" aria-hidden="true">
+            <div class="v-activity">
+              <div class="v-activity-head">
+                <span>Contact rhythm</span>
+                <span class="v-trend">30 days</span>
+              </div>
+              <div class="v-rhythm-grid" aria-hidden="true">
+                <i></i><i></i><i class="on"></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i>
+                <i></i><i class="on"></i><i></i><i></i><i class="on"></i><i class="on"></i><i></i><i></i><i class="on"></i><i></i>
+                <i></i><i></i><i class="on"></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i></i><i></i>
+              </div>
+              <div class="v-chart-axis"><small>Nov 1</small><small>Nov 30</small></div>
+              <small class="v-rhythm-note">Each mark is a day with logged contact.</small>
+              <div class="v-summary">
+                <div class="v-row"><span>You called Maya</span><b>Today</b></div>
+                <div class="v-row"><span>Next reminder</span><b>Thu · 8:00 PM</b></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-copy">
+            <h3>Facts, not feelings</h3>
+            <p>A ranked feed of on-device observations — streaks, longest gaps, favorite dayparts, quiet channels, category trends. A photo row filters the feed by person. Basic Insights is free; Plus adds typical-gap and two-period channel comparisons that open the matching Summary, with one matching preview free. New cards can be hidden with Undo and shown again, and you choose which people and types appear.<sup><a href="#fn2" id="fnref2">2</a></sup></p>
+          </div>
+          <div class="card-visual" aria-hidden="true">
+            <div class="v-insight" id="insightCard">
+              <b class="insight-title">A run of you reaching out</b>
+              <span class="insight-body">Your last 3 interactions with Maya were all started by you.</span>
+              <small class="insight-foot">Maya · calculated on this iPhone</small>
+              <span class="insight-dots" aria-hidden="true"><i class="on"></i><i></i><i></i></span>
+            </div>
+            <div class="v-feed-rows">
+              <span><b>2</b> Longest gap <small>Sofia</small></span>
+              <span><b>3</b> Quiet channel <small>Priya</small></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-copy">
+            <h3>The bigger picture</h3>
+            <p>Open General stats for a whole-circle view. Choose 7 days, 30 days, or all time to see interactions, people contacted, who reached out, and a communication breakdown by channel. Free, calculated on this iPhone.</p>
+          </div>
+          <div class="card-visual" aria-hidden="true">
+            <div class="v-stats">
+              <div class="v-stats-top">
+                <span class="v-stats-title">General stats</span>
+                <span class="v-seg"><i class="on">30 days</i><i>All time</i></span>
+              </div>
+              <div class="v-stats-totals">
+                <span><b>18</b><small>Interactions</small></span>
+                <span><b>6</b><small>People contacted</small></span>
+              </div>
+              <div class="v-stats-block">
+                <p class="v-stats-label">Who reached out</p>
+                <div class="v-split"><i class="you"></i><i class="them"></i></div>
+                <div class="v-legend">
+                  <span><i class="you"></i>You <b>11</b> <small>61%</small></span>
+                  <span><i class="them"></i>Them <b>7</b> <small>39%</small></span>
+                </div>
+              </div>
+              <div class="v-stats-block">
+                <p class="v-stats-label">Communication</p>
+                <div class="v-bars">
+                  <span class="v-bar"><span>Message</span><span class="v-bar-track"><i style="width:50%"></i></span><b>9</b></span>
+                  <span class="v-bar"><span>Call</span><span class="v-bar-track"><i style="width:28%"></i></span><b>5</b></span>
+                  <span class="v-bar"><span>In Person</span><span class="v-bar-track"><i style="width:17%"></i></span><b>3</b></span>
+                  <span class="v-bar"><span>Video</span><span class="v-bar-track"><i style="width:5%"></i></span><b>1</b></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-copy">
+            <h3>Organize and archive</h3>
+            <p>Group people into categories, switch between List and Gallery, and drag cards into your own order. Tap a row for swipe controls, or its chevron for the full profile. When a connection goes quiet, archive it — the history stays, the list stays calm.</p>
+          </div>
+          <div class="card-visual" aria-hidden="true">
+            <div class="v-org">
+              <span class="layout-picker"><span>Gallery</span><span class="on">List</span></span>
+              <div class="chips">
+                <span class="chip selected">All</span><span class="chip">Family</span><span class="chip">Friends</span><span class="chip">Work</span><span class="chip chip-add">＋</span>
+              </div>
+              <p class="v-org-label">Archived</p>
+              <div class="v-archived">
+                <span class="v-archived-avatar" style="--av-bg:linear-gradient(140deg,rgba(114,59,250,.24),rgba(114,59,250,.46))">👩🏽</span>
+                <span class="v-archived-copy"><b>Sofia Almeida</b><small>Friends · Archived 2 weeks ago</small></span>
+                <span class="v-unarchive">Unarchive</span>
+              </div>
+              <p class="v-org-empty" hidden><span>Sofia moved back to your list.</span><span class="v-undo">Undo</span></p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-copy">
+            <h3>Make it yours</h3>
+            <p>Choose appearance and language, set a default logging channel, and schedule the optional weekly check-in. Privacy can hide names in reminders. Settings also shows your Plus plan, manages subscriptions, restores purchases, records your last backup date, and includes troubleshooting and the app version.</p>
+          </div>
+          <div class="card-visual" aria-hidden="true">
+            <div class="v-settings">
+              <div class="v-setting">
+                <span>Appearance</span>
+                <span class="v-seg v-seg-small"><i>System</i><i>Light</i><i class="on">Dark</i></span>
+              </div>
+              <div class="v-setting"><span>Language</span><span class="v-chev">›</span></div>
+              <div class="v-setting"><span>Default channel</span><b>Last used</b></div>
+              <div class="v-setting"><span>Weekly check-in</span><b>Sunday · 6:00 PM</b></div>
+              <div class="v-setting"><span>Hide names in reminders</span><b>On</b></div>
+              <div class="v-setting"><span>Troubleshooting</span><span class="v-chev">›</span></div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Privacy ===== -->
+  <section class="section privacy" id="privacy">
+    <div class="wrap reveal">
+      <span class="privacy-mark" aria-hidden="true"><img src="assets/bondlog-mark-192.png" alt="" width="192" height="192" loading="lazy" decoding="async"></span>
+      <h2 class="headline">Private by design. That part is real.</h2>
+      <p class="lede">BondLog is local-first. Your relationship history lives on your device. <strong>You choose when to export a backup.</strong></p>
+
+      <div class="trio">
+        <div>
+          <div class="p-mock" aria-hidden="true">
+            <span class="mock-ico"><svg class="ico" focusable="false"><use href="#ico-iphone"></use></svg></span>
+            <span class="mock-copy"><b>Stored on this iPhone</b><span>No upload, no sync</span></span>
+          </div>
+          <h3>Stays on your iPhone</h3>
+          <p>Categories, people, photos, interactions, reminders, notes, dates, and insights live in the app’s local database on your device.</p>
+        </div>
+        <div>
+          <div class="p-mock" aria-hidden="true">
+            <span class="mock-ico"><svg class="ico" focusable="false"><use href="#ico-noaccount"></use></svg></span>
+            <span class="mock-copy"><b>Not signed in</b><span>No account, no ads</span></span>
+          </div>
+          <h3>No account. No ads.</h3>
+          <p>There’s no sign-in and no email required. No advertising and no tracking. Apple handles purchases through the App Store.</p>
+        </div>
+        <div>
+          <div class="p-mock" aria-hidden="true">
+            <span class="mock-rows">
+              <span class="mock-row"><span>Export My Data</span><svg class="ico" focusable="false"><use href="#ico-export"></use></svg></span>
+              <span class="mock-row"><span>Restore from Backup</span><svg class="ico" focusable="false"><use href="#ico-note"></use></svg></span>
+              <span class="mock-row"><span>Delete All My Data</span><svg class="ico" focusable="false"><use href="#ico-trash"></use></svg></span>
+            </span>
+          </div>
+          <h3>Export, restore, or delete</h3>
+          <p>Save a JSON backup including photos, see the date of your last export, restore missing records without overwriting anything, or delete your local journal after confirmation in Settings.</p>
+        </div>
+      </div>
+      <p class="privacy-fine">BondLog has no journal sync and does not access your contacts or messages. Reminders are scheduled on your device. You can export your own backup, and Apple’s device backups may also include app data. Hide names in reminders keeps personal text out of notification alerts.</p>
+    </div>
+  </section>
+
+  <!-- ===== Journey ===== -->
+  <section class="section journey" id="how">
+    <div class="wrap reveal">
+      <h2 class="headline">How BondLog fits into your week</h2>
+      <p class="lede">One small setup, then two steps repeated gently. No setup marathon, no data-entry binges.</p>
+
+      <div class="journey-grid">
+        <div class="journey-col">
+          <div class="journey-top">
+            <span class="glyph" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.2a3.1 3.1 0 1 0 0-6.2 3.1 3.1 0 0 0 0 6.2Z"/><path d="M2.8 20c.7-3.3 3.1-5.2 6.2-5.2s5.5 1.9 6.2 5.2"/><path d="M16.6 11.5h4.6M18.9 9.2v4.6"/></svg>
+            </span>
+            <h3>Add people</h3>
+            <p>Start with the handful of people you don’t want to lose track of.</p>
+          </div>
+          <div class="cell"><b>About a minute</b>to set up your first list</div>
+          <div class="cell"><b>No account</b>nothing to sign in to</div>
+          <div class="cell"><b>Optional photo</b>or just initials or emoji</div>
+        </div>
+
+        <div class="journey-col">
+          <div class="journey-top">
+            <span class="glyph" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"/><path d="m14 6 6 6-6 6"/><path d="M4 6v12"/></svg>
+            </span>
+            <h3>Log moments</h3>
+            <p>After a call, a coffee, or a text thread, add it in seconds — or straight from the Home Screen widget.</p>
+          </div>
+          <div class="cell"><b>One swipe</b>then choose the channel</div>
+          <div class="cell"><b>Four channels</b>in person, call, message, video</div>
+          <div class="cell"><b>Backdate anytime</b>the date is yours to set</div>
+        </div>
+
+        <div class="journey-col">
+          <div class="journey-top">
+            <span class="glyph" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.4-7.5-9.7A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 7.5 2.8c0 5.3-7.5 9.7-7.5 9.7Z"/></svg>
+            </span>
+            <h3>Stay in touch</h3>
+            <p>Open Reach out, see who’s due, and decide what to do about it.</p>
+          </div>
+          <div class="cell"><b>Reach out list</b>due reminders and upcoming dates</div>
+          <div class="cell"><b>One-time + recurring</b>reminders that fit your rhythm</div>
+          <div class="cell"><b>Special dates & notes</b>surfaced when they matter</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="section faq" id="faq">
+    <div class="wrap reveal">
+      <h2 class="headline">Questions, answered plainly.</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Does BondLog read my messages or contacts?</summary>
+          <p>No. BondLog can’t see your messages, contacts, or call history. You log each interaction yourself, including videos you sent or received.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Where is my data stored?</summary>
+          <p>On your iPhone, in the app’s local database: people, photos, interactions, reminders, notes, dates, and insights. There’s no account and no relationship-data cloud. Apple handles purchases through the App Store.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need an account or an internet connection?</summary>
+          <p>The journal works offline without an account. App Store services and links to external pages use an internet connection.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is it free?</summary>
+          <p>The journal is free to use, with no ads: up to five active people, two categories, unlimited logging, 30-day history in the list, and day/week plus one-time reminders.</p>
+          <p>An optional Plus upgrade adds unlimited people, categories, and history; 90-day, one-year, and all-time Contact rhythm with a typical-gap chart; period comparisons and channel changes; Plus Insights; smart reminders; minute/hour Keep in Touch reminders; and a Weekly review in Reach out. Plus is available as a monthly or annual subscription or a one-time Lifetime purchase. You can manage subscriptions and restore purchases in Settings. Basic Insights, logging, widgets and backup recovery stay free. Restoring a backup or unarchiving people remains available even above the free active-person allowance.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do reminders work?</summary>
+          <p>Each person can have a one-time reminder — set with hour and minute wheels or a custom date and time, with an optional note — and a separate keep-in-touch schedule that repeats weekly to custom. When something is due, Remind Me Later offers quick choices from 15 minutes to next week (or a custom date). Reminders are local notifications with Log, Snooze, and Complete actions, plus an optional weekly check-in on the day and time you choose. Reminder settings shows notification status and can send a test notification, and Hide names in reminders keeps names, notes, and occasion labels out of alerts.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What do the insights show?</summary>
+          <p>Insights has two views. The feed ranks on-device observations — streaks, longest gaps, favorite dayparts, quiet channels, and category trends. A photo row filters the feed by person. General stats shows 7 days, 30 days, or all time, with interactions, people contacted, who reached out, and a communication breakdown by channel. Basic Insights is free; Plus adds typical-gap and two-period channel comparisons that open the matching Summary, with one matching preview free. New cards can be hidden with Undo and shown again, and you choose which people and types appear. Each person also keeps their own insights and summary. Calculated on device, and never about anyone’s feelings.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What are Special Dates, memory cues, and notes?</summary>
+          <p>A birthday, labeled special dates, and a short memory cue you want to remember before reaching out. Birthdays and special dates appear in Reach out when they’re near, and the memory cue appears in their profile and in Reach out. Each profile also keeps a list of dated notes — add, edit, or delete them there, and saved notes appear on the person’s People card.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I log without opening the app?</summary>
+          <p>Yes. The free medium and large Home Screen widgets let you tap a person, choose Them or You, then the channel, and the interaction is saved with Undo. It pages through up to twelve people, ordered by your list or by most overdue. The small widget shows a read-only grid.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I back up and restore my journal?</summary>
+          <p>Yes, and it’s free. Export My Data creates a JSON backup including photos, notes, reminders, dates, interactions, and Insights state, and Settings records the date of your last successful export. Restore from Backup adds missing records from a file you choose without replacing current data. Recovery stays free, including when your restored active list goes above five people. Backups aren’t encrypted — keep them private.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What if something isn’t working?</summary>
+          <p>Open Settings → Support → Troubleshooting for offline answers about a missing reminder, missing Plus access, moving to a new device, a person you can’t find, and an interaction logged by mistake. Reminder settings can also check notification status and send a test.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What do I need to run it?</summary>
+          <p>An iPhone with iOS 27 or later. The app is localized in 28 languages, follows your system appearance with a System / Light / Dark picker, and includes a Language row in Settings. It supports Dynamic Type, VoiceOver, and Reduce Motion. The Support footer in Settings shows the version and build.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Download ===== -->
+  <section class="section section-tint download" id="download">
+    <div class="wrap reveal">
+      <h2 class="headline">Be there for the people who&nbsp;matter.</h2>
+      <p class="lede">BondLog is in the final stretch of development and isn’t on the App Store yet. <strong>Check back soon</strong> — and in the meantime, see exactly how it treats your data.</p>
+      <p class="download-actions"><button type="button" class="btn btn-big is-soon" data-store-cta>Coming soon to the App Store</button></p>
+      <p class="fine" data-store-note>BondLog is not yet available on the App Store. This page will link to the listing when it launches.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <ul class="foot-notes" role="list">
+      <li id="fn1">BondLog does not read your messages, contacts, or call history, and does not require an account.</li>
+      <li id="fn2">Insights are deterministic, rule-based summaries calculated on device. The app ships no AI model, and no relationship data is sent to a cloud AI service.</li>
+      <li id="fn3">Names, dates, and interface examples on this page are illustrative and fictional.</li>
+    </ul>
+    <div class="legal">
+      <span>Copyright © 2026 BondLog. All rights reserved.</span>
+      <span class="legal-links"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="support.html">Support</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js?v=21"></script>
+</body>
+</html>

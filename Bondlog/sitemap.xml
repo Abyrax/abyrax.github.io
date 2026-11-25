@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Intended production paths; deployment is still pending. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://abyrax.com/Bondlog/</loc><priority>1.0</priority></url>
+  <url><loc>https://abyrax.com/Bondlog/privacy.html</loc><priority>0.3</priority></url>
+  <url><loc>https://abyrax.com/Bondlog/terms.html</loc><priority>0.3</priority></url>
+  <url><loc>https://abyrax.com/Bondlog/support.html</loc><priority>0.4</priority></url>
+</urlset>
